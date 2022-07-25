@@ -108,12 +108,14 @@ def spawn_agent(agent_id: int, random_pos: bool, pose_x: float, pose_y: float, a
         request.model_xml = sdf_model
 
         while True: # Keep generating new positions until a non-occupied position is found
-            request.initial_pose.position.x = random.uniform(-ARENA_LENGTH, ARENA_LENGTH)
-            request.initial_pose.position.y = random.uniform(-ARENA_WIDTH, ARENA_WIDTH)
-            request.initial_pose.position.z = 0
-
-            # TODO Add angle to the request
+            pose_x = random.uniform(-ARENA_LENGTH, ARENA_LENGTH)
+            pose_y = random.uniform(-ARENA_WIDTH, ARENA_WIDTH)
             # angle = random.uniform(0, math.pi)
+
+            request.initial_pose.position.x = pose_x
+            request.initial_pose.position.y = pose_y
+            request.initial_pose.position.z = 0
+            # TODO Add angle to the request
 
             position_occupied = check_position(request.initial_pose.position.x, request.initial_pose.position.y)
             
@@ -125,6 +127,9 @@ def spawn_agent(agent_id: int, random_pos: bool, pose_x: float, pose_y: float, a
                 rospy.loginfo("Spawning Agent {} at Pose ({}, {},{})".format(agent_id, pose_x, pose_y, angle))
                 # Call the service to spawn the agent
                 spawn_service.call(request)
+
+                # ! Make Agent() object
+                Agent(agent_id, pose_x,pose_y,angle)
 
                 rospy.loginfo("Model Spawned!!")
                 break
@@ -156,7 +161,10 @@ def spawn_agent(agent_id: int, random_pos: bool, pose_x: float, pose_y: float, a
 
                 # Call the service to spawn the agent
                 spawn_service.call(request)
-
+                
+                # ! Make Agent() object
+                Agent(agent_id, pose_x, pose_y, angle)
+                
                 rospy.loginfo("Model Spawned!!")
                 break
 

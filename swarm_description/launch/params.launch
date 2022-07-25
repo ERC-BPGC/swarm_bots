@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- File to Load in the launch params to the Parameter Server -->
+
+<launch >
+	<rosparam command = "load" file = "$(find swarm_description)/config/params.yaml" />
+</launch>
