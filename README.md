@@ -3,7 +3,7 @@ The Offical repository of the project SwarmBots
 
 ## Current Tasks
 
-- [ ] Make URDF for Custom Robot 
+- [x] Make URDF for Custom Robot 
   - [ ] Make Meshes for the base-link, wheels and some sensors  
 
 - [ ] Design Controller for the Custom Robot
