@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from gazebo_msgs.srv import SpawnModel
 import os
+import rospy
 import rospkg
 from geometry_msgs.msg import Pose
 
@@ -16,7 +17,7 @@ reference_frame='world'
 spawn_bot_client = rospy.ServiceProxy('gazebo/spawn_sdf_model', SpawnModel)
 
 directory = rospack.get_path('swarm_description')
-full_path = os.path.join(directory,'model/agent/urdf','bot.urdf.xacro')
+full_path = os.path.join(directory,'models/agent/urdf','bot.urdf.xacro')
 
 def spawn_bots(coordinate_list, client=spawn_bot_client, pose=initial_pose, urdf_dir=full_path):
 	count = 0
@@ -28,4 +29,4 @@ def spawn_bots(coordinate_list, client=spawn_bot_client, pose=initial_pose, urdf
 , 'r').read(),robot_namespace=namespace, initial_pose = pose)
 		count+=1
 
-#spawn_bots([(0,0),(1,1),(0,2),(3,4)])
+spawn_bots([(0,0),(1,1),(0,2),(3,4)])

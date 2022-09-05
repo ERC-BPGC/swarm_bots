@@ -8,7 +8,11 @@ project(swarm_description)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  joint_state_publisher
+  joint_state_publisher_gui
   rospy
+  geometry_msgs
+  nav_msgs
 )
 
 ## System dependencies are found with CMake's conventions
