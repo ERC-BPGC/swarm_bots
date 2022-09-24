@@ -1,8 +1,4 @@
 # 6969 is Dummy Value
 
-agent_id : [6969]
-agent_start_position : [[6969,6969,6969]]
-
-
-arena_length : 10
-arena_length : 10 
+bot_spawn_coordindates : [[0,0],[1,1],[0,2],[3,4]]
+bot_index : []
