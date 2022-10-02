@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>	
+<launch>
+
+	<!-- <include file="$(find gazebo_ros)/" -->
+
+	<param name="robot_description" command="cat '$(find swarm_description)/models/agent/urdf/bot.urdf.xacro'" />
+	<node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+	args="-urdf -param robot_description -model m2wr" />
+
+</launch>

@@ -41,6 +41,7 @@
     <visual>
       <geometry>
         <cylinder length="0.12" radius="0.08"/>
+		<!-- <mesh filename = "package://swarm_description/models/agent/meshes/aruco_bot.dae" scale="1 1 1" /> -->
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0.085"/>
       <material name="white">
