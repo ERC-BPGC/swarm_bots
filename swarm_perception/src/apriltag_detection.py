@@ -10,13 +10,15 @@ ros_img = Image()
 def img_callback(msg):
 	global ros_img
 
-	rospy.loginfo("Image Received")
+	# rospy.loginfo("Image Received")
 	ros_img = msg
 	cv_img = bridge.imgmsg_to_cv2(ros_img, "bgr8")
 	
 	gray = cv2.cvtColor(cv_img, cv2.COLOR_BGR2GRAY)
 	detector = apriltag("tag36h11")
 	results = detector.detect(gray)
+	if len(results) > 0:
+		rospy.loginfo(f"{len(results)} Tags Detected, Drawing Bounding Boxes")
 
 	for i in range(0,len(results)):
 		# Corners of the tag
@@ -28,25 +30,24 @@ def img_callback(msg):
 		
 		top_center = int((lt[0]+rt[0])/2),int((lt[1]+rt[1])/2)
 		# Draw the bounding boxes
-		rospy.loginfo("AprilTag Detected, Drawing Bounding Boxes")
-		cv2.line(cv_img,lb,rb,(0,255,0),6)
-		cv2.line(cv_img,rb,rt,(0,255,0),6)
-		cv2.line(cv_img,rt,lt,(0,255,0),6)
-		cv2.line(cv_img,lt,lb,(0,255,0),6)
+		cv2.line(cv_img,lb,rb,(0,255,0),2)
+		cv2.line(cv_img,rb,rt,(0,255,0),2)
+		cv2.line(cv_img,rt,lt,(0,255,0),2)
+		cv2.line(cv_img,lt,lb,(0,255,0),2)
 
 		# Draw arrow from center of tag to center of top edge
-		cv2.arrowedLine(cv_img,center,top_center, (0,0,255),6,tipLength=0.1, line_type=cv2.LINE_AA)
+		cv2.arrowedLine(cv_img,center,top_center, (0,0,255),3,tipLength=0.08, line_type=cv2.LINE_AA)
 
 		# Draw Dots at the corners
-		cv2.circle(cv_img,lb,10,(255, 255, 0),-1)
-		cv2.circle(cv_img,rb,10,(255, 0, 255),-1)
-		cv2.circle(cv_img,rt,10,(0, 225, 255),-1)
-		cv2.circle(cv_img,lt,10,(255, 0, 0),-1)
+		cv2.circle(cv_img,lb,2,(255, 255, 0),-1)
+		cv2.circle(cv_img,rb,2,(255, 0, 255),-1)
+		cv2.circle(cv_img,rt,2,(0, 225, 255),-1)
+		cv2.circle(cv_img,lt,2,(255, 0, 0),-1)
 		rate= rospy.Rate(5)
 		rate.sleep()
 
 
-	rospy.loginfo("Publishing Image")
+	# rospy.loginfo("Publishing Image")
 	img_pub.publish(bridge.cv2_to_imgmsg(cv_img, "bgr8"))
 	# cv2.imshow('Tags',cv_img)
 	# cv2.waitKey(0)

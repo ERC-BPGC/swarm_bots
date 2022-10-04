@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+
 <sdf version='1.7'>
   <world name='default'>
     <light name='sun' type='directional'>
@@ -549,113 +551,78 @@
       <pose>0 0 0 0 -0 0</pose>
     </model>
     <gui fullscreen='0'>
-      <camera name='user_camera'>
+      <camera name='rgb'>
         <pose>7.02597 -2.25059 7.15528 0 0.763643 2.6402</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
-    <model name='unit_box'>
+    <model name='camera'>
+      <pose>0 0 3 0 1.57075 0</pose>
       <link name='link'>
-        <inertial>
-          <mass>1</mass>
-          <inertia>
-            <ixx>0.166667</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.166667</iyy>
-            <iyz>0</iyz>
-            <izz>0.166667</izz>
-          </inertia>
-          <pose>0 0 0 0 -0 0</pose>
-        </inertial>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-        <pose>0 0 0 0 -0 0</pose>
-        <gravity>0</gravity>
+
         <visual name='visual'>
           <geometry>
             <box>
-              <size>0.063437 0.139699 0.047475</size>
+              <size>0.01 0.01 0.01</size>
             </box>
           </geometry>
-          <material>
-            <script>
-              <name>Gazebo/Green</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
-            <shader type='pixel'>
-              <normal_map>__default__</normal_map>
-            </shader>
-            <ambient>0 1 0 1</ambient>
-            <diffuse>0 1 0 1</diffuse>
-            <specular>0.1 0.1 0.1 1</specular>
-            <emissive>0 0 0 1</emissive>
-          </material>
-          <pose>0 0 0 0 -0 0</pose>
-          <transparency>0</transparency>
-          <cast_shadows>1</cast_shadows>
         </visual>
-        <collision name='collision'>
-          <laser_retro>0</laser_retro>
-          <max_contacts>10</max_contacts>
-          <pose>0 0 0 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.063437 0.139699 0.047475</size>
-            </box>
-          </geometry>
-          <surface>
-            <friction>
-              <ode>
-                <mu>1</mu>
-                <mu2>1</mu2>
-                <fdir1>0 0 0</fdir1>
-                <slip1>0</slip1>
-                <slip2>0</slip2>
-              </ode>
-              <torsional>
-                <coefficient>1</coefficient>
-                <patch_radius>0</patch_radius>
-                <surface_radius>0</surface_radius>
-                <use_patch_radius>1</use_patch_radius>
-                <ode>
-                  <slip>0</slip>
-                </ode>
-              </torsional>
-            </friction>
-            <bounce>
-              <restitution_coefficient>0</restitution_coefficient>
-              <threshold>1e+06</threshold>
-            </bounce>
-            <contact>
-              <collide_without_contact>0</collide_without_contact>
-              <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
-              <collide_bitmask>1</collide_bitmask>
-              <ode>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-                <max_vel>0.01</max_vel>
-                <min_depth>0</min_depth>
-              </ode>
-              <bullet>
-                <split_impulse>1</split_impulse>
-                <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-              </bullet>
-            </contact>
-          </surface>
-        </collision>
-      </link>
-      <static>0</static>
-      <allow_auto_disable>1</allow_auto_disable>
-      <pose>0 0 3 0 0.019312 -0.000182</pose>
-    </model>
+  
+        <sensor name='camera' type='camera'>
+          <camera name='__default__'>
+            <horizontal_fov>1.78</horizontal_fov>
+            <image>
+              <width>1920</width>
+              <height>1280</height>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+            <!-- <lens>
+              <type>custom</type>
+              <custom_function>
+                <c1>1.05</c1>
+                <c2>4</c2>
+                <f>1</f>
+                <fun>tan</fun>
+              </custom_function>
+              <scale_to_hfov>1</scale_to_hfov>
+              <cutoff_angle>3.1415</cutoff_angle>
+              <env_texture_size>1080</env_texture_size>
+            </lens> -->
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>1</visualize>
+          <plugin name='camera_plugin' filename='libgazebo_ros_camera.so'>
+            <robotNamespace></robotNamespace>
+            <alwaysOn>true</alwaysOn>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <updateRate>30.0</updateRate>
+            <cameraName>rgb</cameraName>
+            <frameName>/robot_camera_link</frameName>
+            <CxPrime>320.5</CxPrime>
+            <Cx>320.5</Cx>
+            <Cy>240.5</Cy>
+            <hackBaseline>0</hackBaseline>
+            <!-- <focalLength>277.191356</focalLength> -->
+            <focalLength>777.580124</focalLength>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+
+          </sensor>
+          <self_collide>0</self_collide>
+          <kinematic>0</kinematic>
+        </link>
+        <static>1</static>
+      </model>
+
   </world>
 </sdf>

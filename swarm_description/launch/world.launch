@@ -6,4 +6,9 @@
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
 		<arg name="world_name" value="$(find swarm_description)/worlds/swarm_arena.world"/>
 	</include>
+
+	<include file="$(find swarm_description)/launch/params.launch"/>	
+
+	<!-- Spawn Models
+	<node pkg = "swarm_description" type = "spawn_node.py" name = "spawn_swarm" output = "screen" /> -->
 </launch>
