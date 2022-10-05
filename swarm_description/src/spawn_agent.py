@@ -18,7 +18,7 @@ def spawn_agent(qty):
 
 	# Get URDF file
 	rospack = rospkg.RosPack()
-	urdf_dir = os.path.join(rospack.get_path("swarm_description"), "models/agent/urdf", "bot.urdf.xacro")
+	urdf_dir = os.path.join(rospack.get_path("swarm_description"), "models/agent0", "bot.urdf.xacro")
 	client = rospy.ServiceProxy("gazebo/spawn_urdf_model", SpawnModel)
 	
 

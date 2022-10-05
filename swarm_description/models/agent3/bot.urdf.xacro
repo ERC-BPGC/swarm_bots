@@ -40,7 +40,8 @@
 		</collision>
 		<visual>
 			<geometry>
-				<cylinder length="0.12" radius="0.1"/>
+				<!--<cylinder length="0.12" radius="0.1"/>-->
+				<mesh filename="package://swarm_description/models/TagModels/tag3/apriltag_work.dae"/>
 			</geometry>
 			<origin rpy="0 0 0" xyz="0 0 0.085"/>
 			<material name="white">
