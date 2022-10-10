@@ -1,4 +1,14 @@
-# 6969 is Dummy Value
-
+# Start Params
+bots: 10
 bot_spawn_coordinates : []
-bot_index : []
+
+# Dimension of Enclosure (in meters) (Assuming it to be a square)
+dimension: 5
+
+# Image Coords of the Bounding Box Corners
+image_frame_bounds: []
+
+# Conversion Factor from Image to Global Frame (units: meter/pixel)
+scale: 0.0
+
+ 

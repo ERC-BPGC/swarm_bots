@@ -12,14 +12,12 @@ import numpy as np
 def spawn_agent(qty):
 
 	# Service Calls
-	rospy.loginfo("Waiting for Service: gazebo/spawn_urdf_model")
+	rospy.loginfo("Waiting for Service: gazebo/spawn_urdf_model ....")
 	rospy.wait_for_service("gazebo/spawn_urdf_model")
-	rospy.loginfo("Service: gazebo/spawn_urdf_model is available")
+	rospy.loginfo("Service: gazebo/spawn_urdf_model is available!!")
 
 	# Get URDF file
 	rospack = rospkg.RosPack()
-	urdf_dir = os.path.join(rospack.get_path("swarm_description"), "models/agent0", "bot.urdf.xacro")
-	client = rospy.ServiceProxy("gazebo/spawn_urdf_model", SpawnModel)
 	
 
 	coords = rospy.get_param("bot_spawn_coordinates")
@@ -32,6 +30,8 @@ def spawn_agent(qty):
 	count = 0
 
 	for i in range(qty):
+		urdf_dir = os.path.join(rospack.get_path("swarm_description"), f"models/agent{i}", "bot.urdf.xacro")	
+		client = rospy.ServiceProxy("gazebo/spawn_urdf_model", SpawnModel)
 		# ! bot_index.append(count)
 		
 		# Assign random coordinates
@@ -55,4 +55,6 @@ def spawn_agent(qty):
 
 if __name__=="__main__":
 	rospy.init_node("spawn_agent")
-	spawn_agent(5)
+	bots = rospy.get_param("bots")
+	rospy.loginfo(f"Initialising Simulation with {bots} bots ")
+	spawn_agent(bots)
