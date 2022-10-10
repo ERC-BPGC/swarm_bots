@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+
+<robot name="test_robot">
+	<gazebo>
+		<plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+			<legacyMode>false</legacyMode>
+			<rosDebugLevel>na</rosDebugLevel>
+			<alwaysOn>true</alwaysOn>
+			<updateRate>20</updateRate>
+			<leftJoint>base_to_wheel1</leftJoint>
+			<rightJoint>base_to_wheel2</rightJoint>
+			<publishWheelTF>false</publishWheelTF>
+			<publishOdomTF>false</publishOdomTF>
+			<publishWheelJointState>false</publishWheelJointState>
+			<wheelTorque>10</wheelTorque>
+			<wheelSeparation>0.2</wheelSeparation>
+			<wheelDiameter>0.092</wheelDiameter>
+			<wheelAcceleration>0</wheelAcceleration>
+			<torque>10</torque>
+			<commandTopic>cmd_vel</commandTopic>
+			<odometryTopic>odom</odometryTopic>
+			<odometryFrame>odom</odometryFrame>
+			<odometrySource>0</odometrySource>
+			<robotBaseFrame>base_link</robotBaseFrame>
+			<publishTf>1</publishTf>
+		</plugin>
+	</gazebo>
+	<link name="base_link">
+		<pose>0 0 0.1 0 0 0</pose>
+		<inertial>
+			<mass value="1"/>
+			<origin rpy="0 0 0" xyz="0 0 0.085"/>
+			<inertia ixx="0.0037" ixy="0" ixz="0" iyy="0.0037" iyz="0" izz="0.005"/> 
+		</inertial>
+		<collision>
+			<geometry>
+				<cylinder length="0.12" radius="0.1"/>
+			</geometry>
+			<origin rpy="0 0 0" xyz="0 0 0.085"/>
+		</collision>
+		<visual>
+			<geometry>
+				<!--<cylinder length="0.12" radius="0.1"/>-->
+				<mesh filename="package://swarm_description/models/agent3/meshes/apriltag_work.dae"/>
+			</geometry>
+			<origin rpy="0 0 0" xyz="0 0 0.085"/>
+			<material name="white">
+				<color rgba="1 1 1 1"/>
+			</material>
+		</visual>
+	</link>
+	
+	<link name="wheel1">
+		<inertial>
+			<mass value="0.2"/>
+			<origin rpy="0 0 0 " xyz="0 0 0"/>
+			<inertia ixx="0.0001125" ixy="0" ixz="0" iyy="0.0001125" iyz="0" izz="0.0002116"/> 
+		</inertial>
+		
+		<collision>
+			<geometry>
+				<cylinder length="0.02" radius="0.046"/>
+			</geometry>
+			<origin rpy="0 0 0 " xyz="0 0 0"/>
+		</collision>
+		
+		<visual>
+			<geometry>
+				<cylinder length="0.02" radius="0.046"/>
+			</geometry>
+			<origin rpy="0 0 0 " xyz="0 0 0"/>
+			<material name="black">
+				<color rgba="0 0 0 1"/>
+			</material>
+		</visual>
+	</link>
+	
+	<joint name="base_to_wheel1" type="continuous">
+		<parent link="base_link"/>
+		<child link="wheel1"/>
+		<origin xyz="0 0.11 0.046" rpy="1.5708 0 0"/>
+		<joint_properties damping="1.0" friction="1.0"/> 
+		<axis xyz="0 0 -1"/>
+	</joint>
+	
+	<link name="wheel2">
+		<inertial>
+			<mass value="0.2"/>
+			<origin rpy="0 0 0 " xyz="0 0 0"/>
+			<origin rpy="0 0 0 " xyz="0 0 0"/>
+			<inertia ixx="0.0001125" ixy="0" ixz="0" iyy="0.0001125" iyz="0" izz="0.0002116"/> 
+		</inertial>
+		
+		<collision>
+			<geometry>
+				<cylinder length="0.02" radius="0.046"/>
+			</geometry>
+			<origin rpy="0 0 0 " xyz="0 0 0"/>
+		</collision>
+		<visual>
+			<geometry>
+				<cylinder length="0.02" radius="0.046"/>
+			</geometry>
+			<origin rpy="0 0 0 " xyz="0 0 0"/>
+			<material name="black">
+				<color rgba="0 0 0 1"/>
+			</material>
+		</visual>
+	</link>
+	
+	<joint name="base_to_wheel2" type="continuous">
+		<parent link="base_link"/>
+		<child link="wheel2"/>
+		<origin xyz="0 -0.11 0.046" rpy="1.5708 0 0"/>
+		<joint_properties damping="1.0" friction="1.0"/> 
+		<axis xyz="0 0 -1"/>
+	</joint>
+	
+	<link name="caster_wheel1">
+		<inertial>
+			<mass value="0.01"/>
+			<origin rpy="0 0 0 " xyz="0 0 0"/>
+			<inertia ixx="0.000032" ixy="0" ixz="0" iyy="0.000032" iyz="0" izz="0.000032"/> 
+		</inertial>
+		<collision>
+			<geometry>
+				<sphere radius="0.02"/>
+			</geometry>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+		</collision>
+		
+		<visual>
+			<geometry>
+				<sphere radius="0.02"/>
+			</geometry>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+		</visual>
+		
+		<surface>
+			<friction>
+				<ode>
+					<mu>0</mu>
+					<mu2>0</mu2>
+				</ode>
+			</friction>
+		</surface>
+	</link>
+	
+	<joint name="base_to_caster1" type="continuous">
+		<parent link="base_link"/>
+		<child link="caster_wheel1"/>
+		<origin xyz="0.06 0 0.02"/>
+	</joint>
+	
+	<link name="caster_wheel2">
+		<inertial>
+			<mass value="0.01"/>
+			<origin rpy="0 0 0 " xyz="0 0 0"/>
+			<inertia ixx="0.000032" ixy="0" ixz="0" iyy="0.000032" iyz="0" izz="0.000032"/> 
+		</inertial>
+		
+		<collision>
+			<geometry>
+				<sphere radius="0.02"/>
+			</geometry>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+		</collision>
+		
+		<visual>
+			<geometry>
+				<sphere radius="0.02"/>
+			</geometry>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+		</visual>
+		
+		<surface>
+			<friction>
+				<ode>
+					<mu>0</mu>
+					<mu2>0</mu2>
+				</ode>
+			</friction>
+		</surface>
+	</link>
+	
+	<joint name="base_to_caster2" type="continuous">
+		<parent link="base_link"/>
+		<child link="caster_wheel2"/>
+		<origin xyz="-0.06 0 0.02"/>
+	</joint> 
+</robot>
