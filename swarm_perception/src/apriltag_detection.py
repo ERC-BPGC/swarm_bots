@@ -11,6 +11,7 @@ ros_img = Image()
 bound_top = (0,0)
 bound_bottom = (0,0)
 arena_center = (0,0)
+# Image frame cordinates, not world frame cordinates
 # Initialize the pose array with empty elements for each robot
 poses = PoseArray()
 for i in range(0, rospy.get_param('bots')):
