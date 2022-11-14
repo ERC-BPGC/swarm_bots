@@ -1,13 +1,24 @@
 #usr/bin/env python3
 
-from pickletools import read_stringnl_noescape_pair
 from gazebo_msgs.srv import SpawnModel
 import os
 import rospy
 import rospkg
 from geometry_msgs.msg import Pose
 import numpy as np
+import math
 
+SAFE_DIST = 0.15 # Collision free distance between 2 robots
+coords = rospy.get_param("bot_spawn_coordinates")
+
+
+
+def check_collision(x,y):
+	coords = rospy.get_param("bot_spawn_coordinates")
+	for coord in coords:
+		if abs(coord[0] - x) < SAFE_DIST and abs(coord[1] - y) < SAFE_DIST:
+			return True
+	return False
 
 def spawn_agent(qty):
 
@@ -18,11 +29,8 @@ def spawn_agent(qty):
 
 	# Get URDF file
 	rospack = rospkg.RosPack()
-	
 
-	coords = rospy.get_param("bot_spawn_coordinates")
 	print(coords)
-
 
 	# Parameters have been initialized
 	# ! bot_index = []
@@ -34,10 +42,22 @@ def spawn_agent(qty):
 		client = rospy.ServiceProxy("gazebo/spawn_urdf_model", SpawnModel)
 		# ! bot_index.append(count)
 		
-		# Assign random coordinates
 		rospy.loginfo("Assigning random coordinates")
-		pose.position.x = np.random.uniform(-2.3,2.3)
-		pose.position.y = np.random.uniform(-2.3,2.3)
+		while True:
+			# Assign random coordinates
+			pose.position.x = np.random.uniform(-2.3,2.3)
+			pose.position.y = np.random.uniform(-2.3,2.3)
+			if check_collision(pose.position.x, pose.position.y):
+				print("Collision detected. Trying Again")
+				continue
+			elif not check_collision(pose.position.x, pose.position.y):
+				break
+				
+		half_angle = (float)(np.random.randin() % 360 - 180)/2 * np.pi/180.0
+		pose.orientation.x = 0
+		pose.orientation.y = 0
+		pose.orientation.z = math.sin(half_angle)
+		pose.orientation.z = math.cos(half_angle)
 
 		# Set coordinates on the parameter server
 		coords.append([pose.position.x,pose.position.y])
