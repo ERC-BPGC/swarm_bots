@@ -2,5 +2,15 @@
 	<include file = "$(find swarm_description)/launch/world.launch"/>
 
 	
-		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion" output = "screen" args="0"/>
+		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion_0" output = "screen" args="0"/>
+		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion_1" output = "screen" args="1"/>
+		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion_2" output = "screen" args="2"/>
+		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion_3" output = "screen" args="3"/>
+		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion_4" output = "screen" args="4"/>
+		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion_5" output = "screen" args="5"/>
+		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion_6" output = "screen" args="6"/>
+		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion_7" output = "screen" args="7"/>
+		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion_8" output = "screen" args="8"/>
+		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion_9" output = "screen" args="9"/>
+
 </launch>
