@@ -9,6 +9,6 @@
 
 	<include file="$(find swarm_description)/launch/params.launch"/>	
 
-	<!-- Spawn Models
-	<node pkg = "swarm_description" type = "spawn_node.py" name = "spawn_swarm" output = "screen" /> -->
+	<!-- Spawn Models -->
+	<node pkg = "swarm_description" type = "spawn_agent.py" name = "spawn_swarm" output = "screen" />
 </launch>

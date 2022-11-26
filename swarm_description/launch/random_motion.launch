@@ -1,0 +1,6 @@
+<launch>
+	<include file = "$(find swarm_description)/launch/world.launch"/>
+
+	
+		<node pkg = "swarm_control" type = "random_motion.py" name = "random_motion" output = "screen" args="0"/>
+</launch>

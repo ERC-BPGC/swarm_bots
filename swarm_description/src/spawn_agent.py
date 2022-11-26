@@ -1,13 +1,14 @@
-#usr/bin/env python3
+#!/usr/bin/env python3
 
 from gazebo_msgs.srv import SpawnModel
 import os
 import rospy
 import rospkg
-from geometry_msgs.msg import Pose
+from geometry_msgs.msg import Pose, Quaternion
 import numpy as np
 import math
-
+import random
+from tf.transformations import quaternion_from_euler
 SAFE_DIST = 0.15 # Collision free distance between 2 robots
 coords = rospy.get_param("bot_spawn_coordinates")
 
@@ -53,11 +54,13 @@ def spawn_agent(qty):
 			elif not check_collision(pose.position.x, pose.position.y):
 				break
 				
-		half_angle = (float)(np.random.randin() % 360 - 180)/2 * np.pi/180.0
-		pose.orientation.x = 0
-		pose.orientation.y = 0
-		pose.orientation.z = math.sin(half_angle)
-		pose.orientation.z = math.cos(half_angle)
+		# half_angle = (float)(random.randint() % 360 - 180)/2 * np.pi/180.0
+		q = quaternion_from_euler(0, 0, random.uniform(-np.pi, np.pi))
+		pose.orientation.x = q[0]
+		pose.orientation.y = q[1]
+		pose.orientation.z = q[2]
+		pose.orientation.w = q[3]
+
 
 		# Set coordinates on the parameter server
 		coords.append([pose.position.x,pose.position.y])
