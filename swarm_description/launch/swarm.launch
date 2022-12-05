@@ -1,0 +1,5 @@
+<launch>
+	<include file="$(find swarm_description)/launch/world.launch"/>
+	<node pkg = "swarm_description" type = "spawn_agent.py" name = "spawn_swarm" output = "screen" />
+
+</launch>

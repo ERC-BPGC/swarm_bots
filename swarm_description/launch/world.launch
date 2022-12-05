@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- File to Load in the launch params to the Parameter Server -->
-
-
+<!-- File to start the world and Load in the launch params to the Parameter Server -->
 <launch>
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
 		<arg name="world_name" value="$(find swarm_description)/worlds/swarm_arena.world"/>
 	</include>
-
 	<include file="$(find swarm_description)/launch/params.launch"/>	
-
-	<!-- Spawn Models -->
-	<node pkg = "swarm_description" type = "spawn_agent.py" name = "spawn_swarm" output = "screen" />
 </launch>
