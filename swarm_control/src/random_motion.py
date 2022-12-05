@@ -37,6 +37,10 @@ def main():
 			vel.angular.z = random.uniform(-1,1) * 3.14
 		else:
 			vel.angular.z = 0
+		if math.abs(x-2.5) <=0.2:
+			vel.linear.x = -vel.linear.x
+		if math.abs(y-2.5) <=0.2:
+			vel.linear.x = -vel.linear.x
 		count += 1	
 		pub.publish(vel)
 		rate.sleep()
